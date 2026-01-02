@@ -9,7 +9,7 @@ import Footer from "@/components/Footer";
 import "./styles.css";
 
 export const metadata = {
-  title: `${BLOG_TITLE}`,
+  title: BLOG_TITLE,
   content: "A wonderful blog about JavaScript",
 };
 
