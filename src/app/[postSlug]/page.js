@@ -4,8 +4,13 @@ import BlogHero from "@/components/BlogHero";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { BLOG_TITLE } from "@/constants";
 import CodeSnippet from "@/components/CodeSnippet";
+import dynamic from "next/dynamic";
 
 import styles from "./postSlug.module.css";
+
+const DivisionGroupsDemo = dynamic(() =>
+  import("@/components/DivisionGroupsDemo")
+);
 
 export async function generateMetadata({ params }) {
   const { postSlug } = await params;
@@ -31,6 +36,7 @@ async function BlogPost({ params }) {
           source={content}
           components={{
             pre: CodeSnippet,
+            DivisionGroupsDemo,
           }}
         />
       </div>
