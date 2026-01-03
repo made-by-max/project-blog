@@ -3,7 +3,12 @@ import { Work_Sans, Spline_Sans_Mono } from "next/font/google";
 import clsx from "clsx";
 import { cookies } from "next/headers";
 
-import { LIGHT_TOKENS, DARK_TOKENS, BLOG_TITLE } from "@/constants";
+import {
+  LIGHT_TOKENS,
+  DARK_TOKENS,
+  BLOG_TITLE,
+  BLOG_DESCRIPTION,
+} from "@/constants";
 
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -12,7 +17,7 @@ import RespectMotionPreferences from "@/components/RespectMotionPreferences";
 
 export const metadata = {
   title: BLOG_TITLE,
-  content: "A wonderful blog about JavaScript",
+  content: BLOG_DESCRIPTION,
 };
 
 const mainFont = Work_Sans({
@@ -43,6 +48,12 @@ async function RootLayout({ children }) {
         data-color-theme={theme}
         style={themeColors}
       >
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          title="RSS Feed for Site"
+          href="/feed"
+        />
         <body>
           <Header theme={theme} />
 

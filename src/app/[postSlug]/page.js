@@ -5,7 +5,7 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import { BLOG_TITLE } from "@/constants";
 import CodeSnippet from "@/components/CodeSnippet";
 import dynamic from "next/dynamic";
-
+import { notFound } from "next/navigation";
 import styles from "./postSlug.module.css";
 
 const DivisionGroupsDemo = dynamic(() =>
@@ -17,16 +17,25 @@ const CircularColorsDemo = dynamic(() =>
 
 export async function generateMetadata({ params }) {
   const { postSlug } = await params;
-  const { frontmatter } = await loadBlogPost(postSlug);
+  const blogPostData = await loadBlogPost(postSlug);
+  if (!blogPostData) {
+    return null;
+  }
+  const { frontmatter } = blogPostData;
   return {
-    title: `${frontmatter.title} || ${BLOG_TITLE}`,
-    description: `${frontmatter.abstract}`,
+    title: `${frontmatter.title} - ${BLOG_TITLE}`,
+    description: frontmatter.abstract,
   };
 }
 
 async function BlogPost({ params }) {
   const { postSlug } = await params;
-  const { frontmatter, content } = await loadBlogPost(postSlug);
+  const blogPostData = await loadBlogPost(postSlug);
+  if (!blogPostData) {
+    notFound();
+  }
+
+  const { frontmatter, content } = blogPostData;
 
   return (
     <article className={styles.wrapper}>
