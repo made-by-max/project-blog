@@ -5,7 +5,7 @@ import { Play, Pause, RotateCcw } from "react-feather";
 
 import Card from "@/components/Card";
 import VisuallyHidden from "@/components/VisuallyHidden";
-
+import { motion } from "motion/react";
 import styles from "./CircularColorsDemo.module.css";
 
 const COLORS = [
@@ -18,6 +18,7 @@ function CircularColorsDemo() {
   // TODO: This value should increase by 1 every second:
   const [timeElapsed, setTimeElapsed] = React.useState(0);
   const [isRunning, setIsRunning] = React.useState(false);
+  const id = React.useId();
 
   React.useEffect(() => {
     if (isRunning) {
@@ -44,7 +45,12 @@ function CircularColorsDemo() {
 
           return (
             <li className={styles.color} key={index}>
-              {isSelected && <div className={styles.selectedColorOutline} />}
+              {isSelected && (
+                <motion.div
+                  className={styles.selectedColorOutline}
+                  layoutId={`${id}-selected-color-outline`}
+                />
+              )}
               <div
                 className={clsx(
                   styles.colorBox,
@@ -69,7 +75,7 @@ function CircularColorsDemo() {
         <div className={styles.actions}>
           <button onClick={() => setIsRunning(!isRunning)}>
             {isRunning ? <Pause /> : <Play />}
-            <VisuallyHidden>Play</VisuallyHidden>
+            <VisuallyHidden>{isRunning ? "Pause" : "Play"}</VisuallyHidden>
           </button>
           <button onClick={() => setTimeElapsed(0)}>
             <RotateCcw />
